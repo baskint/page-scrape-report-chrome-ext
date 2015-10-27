@@ -1,0 +1,24 @@
+{
+  "name": "page-scrape-report-chrome-ext",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "node_modules/.bin/phantomjs test/run.js"
+  },
+  "contributors": [{
+    "name": "Baskin Tapkan",
+    "email": "baskint@gmail.com"
+  }],
+  "devDependencies": {
+    "chai": "^1.9.2",
+    "gulp": "^3.9.0",
+    "gulp-shell": "^0.5.0",
+    "jshint": "^2.8.0",
+    "mocha": "^1.21.4",
+    "mocha-phantomjs-istanbul": "0.0.2",
+    "phantomjs": "^1.9.12",
+    "sinon": "^1.11.1",
+    "sinon-chrome": "^0.2.0"
+  },
+  "repository": "https://github.com/baskint/page-scrape-report-chrome-ext",
+  "license": "MIT"
+}
