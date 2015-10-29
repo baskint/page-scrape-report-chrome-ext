@@ -12,4 +12,4 @@ Once the packages are installed, use
 ```
 gulp test
 ```
-for unit testing
+commands should run the tests
