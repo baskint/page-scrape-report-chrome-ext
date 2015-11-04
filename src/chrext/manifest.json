@@ -1,0 +1,35 @@
+{
+    "manifest_version": 2,
+    "name": "Page Scrape Report Tool",
+    "short_name": "Page Scrape Reporting Tool",
+    "description": "This extension analyzes a website for page scraping and reports results",
+    "version": "0.0.1",
+    "browser_action": {
+        "default_icon": "images/icon.png"
+    },
+    "author": "Baskin Tapkan",
+    "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "permissions": [
+    "tabs",
+    "activeTab",
+    "notifications",
+    "http://*/",
+    "https://*/"
+   ],
+    "background": {
+        "scripts": ["eventpage.js"],
+        "persistent": false
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"]
+    }
+  ],
+    "web_accessible_resources": [],
+    "content_security_policy": "script-src 'self' 'unsafe-eval' https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com; object-src 'self'"
+
+}
