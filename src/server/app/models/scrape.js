@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 var ScrapeSchema = new Schema({
   url: String,
-  links: []
+  combines: []
 });
 
 module.exports = mongoose.model('Scrape', ScrapeSchema);

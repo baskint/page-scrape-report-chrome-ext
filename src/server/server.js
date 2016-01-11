@@ -1,5 +1,5 @@
 // server.js
-
+'use strict';
 // BASE SETUP
 // =============================================================================
 
@@ -11,6 +11,9 @@ var express = require('express'); // call express
 var app = express(); // define our app using express
 var bodyParser = require('body-parser');
 var Firebase = require('firebase');
+
+var xrm = require('./app/models/xray-model');
+
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/page-scrape-chrex'); // connect to our database
@@ -52,35 +55,42 @@ router.route('/scrape')
 
 // create a bear (accessed at POST http://localhost:8080/api/bears)
 .post(function (req, res) {
-
-  var links = {
-    link1: encodeURI("http://baskintapkan.com:3004"),
-    link2: encodeURI("http://google.com")
-  };
   var scrape = new Scrape(); // create a new instance of the Scrape model
-
   scrape.url = req.body.url; // set the links
-  scrape.links = links;
-  console.log(req.body.url);
-  // Firebase update happens here
-  var pageScrapeFirebase = new Firebase("https://page-scrape-chrext.firebaseio.com/");
-  pageScrapeFirebase.set({
-    url: scrape.url,
-    links: links
+
+  var readableStream = xrm.scrape(scrape.url);
+  var data = '';
+  readableStream.on('readable', function () {
+    var chunk = '';
+    while ((chunk = readableStream.read()) != null) {
+      data += chunk;
+    }
   });
 
-  // save the bear and check for errors
-  scrape.save(function (err) {
-    if (err)
-      res.send(err);
+  readableStream.on('end', function () {
+    scrape.combines = JSON.parse(data);
+    // save the combines and check for errors
+    scrape.save(function (err) {
+      if (err)
+        res.send(err);
 
-    res.json({
-      links: links
+      res.json({
+        combines: data
+      });
     });
-  });
 
+
+//    var pageScrapeFirebase = new Firebase(
+      //      "https://page-scrape-chrext.firebaseio.com/");
+      //    pageScrapeFirebase.set({
+      //      url: scrape.url,
+      //
+      //    });
+  });
 
 });
+
+
 
 
 
