@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Page Scrape Analysis Tool",
-  "short_name": "Page Scrape Analysi Tool",
-  "description": "This extension analyzes a website for page scraping and analysis",
+  "name": "Page Scrape and Analysis Tool",
+  "short_name": "Page Scrape & Analysis Tool",
+  "description": "This extension analyzes a website for page scraping, analysis and some reporting",
   "version": "0.0.1",
   "browser_action": {
     "default_icon": "images/icon128.png"
@@ -13,13 +13,30 @@
     "48": "images/icon48.png",
     "128": "images/icon128.png"
   },
+  "background": {
+    "scripts": ["eventpage.js"]
+  },
   "browser_action": {
-    "default_icon": "images/icon48.png",
-    "default_popup": "popup.html"
+    "default_icon": "images/icon48.png"
   },
   "permissions": [
     "activeTab",
     "https://ajax.googleapis.com/"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["psa/pagescrape.css"],
+      "js": ["psa/pagescrape.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "psa/pagescrape.html",
+    "psa/pagescrape.css",
+    "images/spinner.gif",
+    "lib/jquery-2.2.0.min.js",
+    "lib/bootstrap/css/bootstrap.min.css",
+    "lib/bootstrap/fonts/*"
   ]
 
 }

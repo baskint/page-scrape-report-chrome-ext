@@ -1,21 +1,15 @@
 {
-    "name": "page-scraper-server-api",
-    "description": "Page Scrape chrome extension backend API",
-    "version": "0.0.1",
-    "private": false,
-    "scripts": {
-        "start": "node ./bin/www"
-    },
-    "repository": "git@github.com:baskint/page-scrape-report-chrome-ext.git",
-    "dependencies": {
-        "body-parser": "~1.13.2",
-        "cookie-parser": "~1.3.5",
-        "debug": "~2.2.0",
-        "express": "~4.13.1",
-        "jade": "~1.11.0",
-        "mongoose": "^4.2.4",
-        "morgan": "~1.6.1",
-        "serve-favicon": "~2.3.0"
-    },
-    "license": "MIT"
+  "name": "page-scraper-server-api",
+  "description": "Page Scrape chrome extension backend API",
+  "version": "0.0.1",
+  "private": false,
+  "main": "server.js",
+  "repository": "git@github.com:baskint/page-scrape-report-chrome-ext.git",
+  "dependencies": {},
+  "license": "MIT",
+  "devDependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "mongoose": "^4.3.5"
+  }
 }
