@@ -4,14 +4,16 @@ var psaScrape = (function () {
 
   var start = function () {
     $('#btnScrape').click(function () {
-      var url = encodeURI('https://news.ycombinator.com/');
+      var scrapeUrl = encodeURI('https://news.ycombinator.com/');
+
       $.ajax({
         type: "POST",
         url: "http://localhost:3003/api/scrape",
-        data: url,
-        contenType: "application/json",
-        success: function (data) {
-          console.log(data);
+        data: {
+          url: scrapeUrl
+        },
+        success: function (res) {
+          console.log(res);
         },
         error: function (err) {
           console.log(err);

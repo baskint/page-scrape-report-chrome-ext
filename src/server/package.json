@@ -10,6 +10,7 @@
   "devDependencies": {
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
+    "firebase": "^2.3.2",
     "mongoose": "^4.3.5"
   }
 }
