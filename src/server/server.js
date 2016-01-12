@@ -3,20 +3,19 @@
 // BASE SETUP
 // =============================================================================
 
-// source:
+// starting source link:
 // https://scotch.io/tutorials/build-a-restful-api-using-node-and-express-4
 
-// call the packages we need
 var express = require('express'); // call express
 var app = express(); // define our app using express
 var bodyParser = require('body-parser');
 var Firebase = require('firebase');
 
+// X-Ray parser model to do back-end parsing
 var xrm = require('./app/models/xray-model');
 
-
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/page-scrape-chrex'); // connect to our database
+mongoose.connect('mongodb://localhost:27017/page-scrape-chrex'); // connect to Mongo database
 
 var Scrape = require('./app/models/scrape');
 
@@ -49,15 +48,15 @@ router.get('/', function (req, res) {
   });
 });
 
-
 // ----------------------------------------------------
 router.route('/scrape')
 
-// create a bear (accessed at POST http://localhost:8080/api/bears)
+// create a scrape data (accessed at POST http://localhost:8080/api/scape)
 .post(function (req, res) {
   var scrape = new Scrape(); // create a new instance of the Scrape model
-  scrape.url = req.body.url; // set the links
+  scrape.url = req.body.url; // set the URL
 
+  // returns a readable stream as defined in the X-ray package - handle accordingly
   var readableStream = xrm.scrape(scrape.url);
   var data = '';
   readableStream.on('readable', function () {
@@ -68,30 +67,40 @@ router.route('/scrape')
   });
 
   readableStream.on('end', function () {
-    scrape.combines = JSON.parse(data);
-    // save the combines and check for errors
-    scrape.save(function (err) {
-      if (err)
-        res.send(err);
-
-      res.json({
-        combines: data
-      });
-    });
-
-
-//    var pageScrapeFirebase = new Firebase(
-      //      "https://page-scrape-chrext.firebaseio.com/");
-      //    pageScrapeFirebase.set({
-      //      url: scrape.url,
-      //
-      //    });
+    persistData(data, scrape, res);
   });
 
 });
 
+function persistData(data, scrape, res) {
+  scrape.combines = JSON.parse(data);
+  // save the combines and check for errors
+  scrape.save(function (err) {
+    if (err)
+      res.send(err);
+    res.json({
+      combines: data
+    });
+  });
 
+  // used the combineSet to update the Firebase instance
+  var combineSet = [];
+  for (var i = 0, len = scrape.combines.length; i < len; i++) {
+    var linkSet = {}
+    linkSet.rank = scrape.combines[i].rank;
+    linkSet.title = scrape.combines[i].title;
+    linkSet.link = scrape.combines[i].link
+    combineSet.push(linkSet);
+  }
 
+  var pageScrapeFirebase = new Firebase(
+    "https://page-scrape-chrext.firebaseio.com/");
+  var fb_scraped = pageScrapeFirebase.child("scrapes");
+  fb_scraped.set({
+    url: scrape.url,
+    combines: combineSet
+  });
+}
 
 
 // REGISTER OUR ROUTES -------------------------------
