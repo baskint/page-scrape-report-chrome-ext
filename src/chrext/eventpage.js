@@ -18,7 +18,6 @@ var psaEvent = (function () {
       if (manifestData) {
         appversion = manifestData.version;
       }
-      //initCapComForm(tab, appversion);
     });
   };
 
