@@ -1,0 +1,4 @@
+{
+  "mongodbUrl": "mongodb://localhost:27017/page-scrape-chrex",
+  "firebaseUrl": "https://page-scrape-chrext.firebaseio.com/"
+}

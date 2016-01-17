@@ -9,13 +9,14 @@
 var express = require('express'); // call express
 var app = express(); // define our app using express
 var bodyParser = require('body-parser');
+var config = require('./config');
 var Firebase = require('firebase');
 
 // X-Ray parser model to do back-end parsing
 var xrm = require('./app/models/xray-model');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/page-scrape-chrex'); // connect to Mongo database
+mongoose.connect(config.mongodbUrl); // connect to Mongo database
 
 var Scrape = require('./app/models/scrape');
 
@@ -36,7 +37,7 @@ var router = express.Router(); // get an instance of the express Router
 // middleware to use for all requests
 router.use(function (req, res, next) {
   // do logging
-  console.log('Something is happening.');
+  console.log('PSA backend is running.');
   next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -44,7 +45,7 @@ router.use(function (req, res, next) {
 // test route to make sure everything is working (accessed at GET http://localhost:3003/api)
 router.get('/', function (req, res) {
   res.json({
-    message: 'hooray! welcome to our api!'
+    message: 'PSA backend is alive and kicking...'
   });
 });
 
@@ -56,6 +57,11 @@ router.route('/scrape')
   var scrape = new Scrape(); // create a new instance of the Scrape model
   scrape.url = req.body.url; // set the URL
 
+  xrayScrape(scrape, req, res);
+
+});
+
+function xrayScrape(scrape, req, res) {
   // returns a readable stream as defined in the X-ray package - handle accordingly
   var readableStream = xrm.scrape(scrape.url);
   var data = '';
@@ -70,10 +76,12 @@ router.route('/scrape')
     persistData(data, scrape, res);
   });
 
-});
+}
 
 function persistData(data, scrape, res) {
   scrape.combines = JSON.parse(data);
+  scrape.scraped_at = Date.now();
+  //scrape.scraped_at: Date();
   // save the combines and check for errors
   scrape.save(function (err) {
     if (err)
@@ -89,16 +97,16 @@ function persistData(data, scrape, res) {
     var linkSet = {}
     linkSet.rank = scrape.combines[i].rank;
     linkSet.title = scrape.combines[i].title;
-    linkSet.link = scrape.combines[i].link
+    linkSet.link = scrape.combines[i].link;
     combineSet.push(linkSet);
   }
 
-  var pageScrapeFirebase = new Firebase(
-    "https://page-scrape-chrext.firebaseio.com/");
+  var pageScrapeFirebase = new Firebase(config.firebaseUrl);
   var fb_scraped = pageScrapeFirebase.child("scrapes");
-  fb_scraped.set({
+  fb_scraped.push({
     url: scrape.url,
-    combines: combineSet
+    combines: combineSet,
+    scrapedAt: Firebase.ServerValue.TIMESTAMP
   });
 }
 

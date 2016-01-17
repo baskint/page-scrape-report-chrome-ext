@@ -53,15 +53,50 @@
   overflow: auto;
 }
 
-.white-popup {
+.psa-panel {
   position: relative;
-  background: #FFF;
-  padding: 20px;
+  background: #060606;
+  padding: 10px;
   width: auto;
-  max-width: 500px;
-  margin: 20px auto;
+  max-width: 300px;
+  margin: auto;
+}
+
+#results-panel {
+  margin-top: 20px;
+  display: none
 }
 
 .psa-analysis .panel-heading: {
   background-color: orange!important
+}
+
+footer span {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  font-style: italic;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin: 0 0 10px;
+  /* bottom = footer height */
+  padding: 25px;
+}
+
+footer {
+  background-color: #337ab7;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 25px;
+  width: 100%;
+  overflow: hidden;
 }

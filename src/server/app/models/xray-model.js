@@ -1,3 +1,4 @@
+'using strict';
 var XRay = require('x-ray');
 var xray = new XRay();
 
@@ -10,14 +11,13 @@ var xray = new XRay();
 //   .limit(3)
 //   .write('./results.json');
 
-exports.scrape = function(url) {
-
+exports.scrape = function (url) {
   return xray(url, '.athing', [{
       rank: '.rank',
       title: 'td:nth-child(3) a',
       link: 'td:nth-child(3) a@href'
     }])
     .paginate('a[rel="nofollow"]:last-child@href')
-    .limit(3)
+    // .limit(3)
     .write();
 };

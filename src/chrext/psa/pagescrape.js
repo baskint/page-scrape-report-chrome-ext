@@ -1,11 +1,15 @@
+// PSA content page
 var psaScrape = (function () {
   'use strict';
   // TODO implement content script functionality
 
   var start = function () {
-    $('#btnScrape').click(function () {
-      var scrapeUrl = encodeURI('https://news.ycombinator.com/');
 
+    init();
+
+    $('#btnScrape').click(function () {
+      var scrapeUrl = encodeURI($('#targeturl').val());
+      console.log(scrapeUrl);
       $.ajax({
         type: "POST",
         url: "http://localhost:3003/api/scrape",
@@ -25,12 +29,32 @@ var psaScrape = (function () {
     });
   };
 
+  function init() {
+    chrome.runtime.sendMessage('psa-init', function (response) {
+      if (response.targetUrl) {
+        $('#targeturl').val(response.targetUrl);
+      }
+      if (response.appversion) {
+        $('#appversion').text('version: ' + response.appversion);
+      }
+    });
+
+  }
+
+  var listener = function (request, sender, sendResponse) {
+
+  };
+
   return {
-    start: start
+    start: start,
+    listener: listener
   };
 })();
 
 document.addEventListener("DOMContentLoaded", function (event) {
   'use strict';
+  // boostrap the application
   psaScrape.start();
+  // set up a listener
+  chrome.runtime.onMessage.addListener(psaScrape.listener);
 });
