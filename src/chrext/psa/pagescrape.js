@@ -9,7 +9,7 @@ var psaScrape = (function () {
 
     $('#btnScrape').click(function () {
       var scrapeUrl = encodeURI($('#targeturl').val());
-      console.log(scrapeUrl);
+      $('#results-panel').hide();
       $.ajax({
         type: "POST",
         url: "http://localhost:3003/api/scrape",
@@ -17,7 +17,7 @@ var psaScrape = (function () {
           url: scrapeUrl
         },
         success: function (res) {
-          console.log(res);
+          displayResults(res);
         },
         error: function (err) {
           console.log(err);
@@ -41,8 +41,19 @@ var psaScrape = (function () {
 
   }
 
-  var listener = function (request, sender, sendResponse) {
+  function displayResults(res) {
+    $('#results-panel').show();
+    var combines = $.parseJSON(res.combines)
+    $.each(combines, function () {
+      console.log(this.rank);
+      console.log(this.title);
+      console.log(encodeURI(this.link));
+    });
+    $('#results-summary').text(combines.length + ' link records are saved');
+  }
 
+  var listener = function (request, sender, sendResponse) {
+    // TODO listen to background page generated events
   };
 
   return {

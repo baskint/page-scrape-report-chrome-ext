@@ -1,8 +1,8 @@
 # Page Scrape and Analysis using a Chrome Extension
 
-This is a two part application which in the first part a chrome extension analyzes a web page for page links and stores the data in a local MongoDB instance and a Firebase instance. It illustrates the concepts in creating a chrome extension, passing events, coordinating data collection, posting data to a backend server.
+This is a two part application which in the first part a chrome extension scrapes a web page for page links and stores the data in a local MongoDB database and a Firebase instance. It illustrates the concepts in creating a chrome extension as a panel, passing events, coordinating data collection, posting data to a backend server and showing the parsed results in a tabular manner.
 
-The second part which is a Node-Express application acts as an endpoint to the front end. It runs certain NPM modules to analyze the passed-in URL and sending back the results as a JSON object
+The second part which is a Node-Express application acts as an endpoint to the front end. It runs certain NPM modules to analyze the passed-in URL and sending back the results as a JSON object.
 
 ## Environment Set up and testing
 For local testing, please clone this repo and run

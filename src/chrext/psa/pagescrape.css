@@ -64,7 +64,9 @@
 
 #results-panel {
   margin-top: 20px;
-  display: none
+  display: none;
+  width: 100%;
+  text-align: center;
 }
 
 .psa-analysis .panel-heading: {

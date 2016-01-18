@@ -30,19 +30,6 @@ var psaEvent = (function () {
     }
   };
 
-  function initPanelWindow(url, appversion) {
-    chrome.tabs.query({
-      active: true,
-      currentWindow: true
-    }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        url: url,
-        appversion: appversion
-
-      }, function (response) {});
-    });
-  }
-
   return {
     start: start,
     listener: listener

@@ -17,7 +17,7 @@ exports.scrape = function (url) {
       title: 'td:nth-child(3) a',
       link: 'td:nth-child(3) a@href'
     }])
-    .paginate('a[rel="nofollow"]:last-child@href')
+    //.paginate('a[rel="nofollow"]:last-child@href')
     // .limit(3)
     .write();
 };

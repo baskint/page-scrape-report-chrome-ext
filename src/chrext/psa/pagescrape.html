@@ -14,32 +14,28 @@
 
 <body>
   <div class="container">
-    <div class="white-popup container-fluid">
-      <h2><small>Page Scrape and Analysis</small></h2>
-      <div class="row">
-        <label for="targeturl">Website URL</label>
-        <input type="text" class="form-control" id="targeturl" value="" disabled />
+    <div class="well well-sm">
+      <h2><small>Page Scrape &amp; Analysis</small></h2>
+    </div>
+    <div class="row">
+      <label for="targeturl">Website URL</label>
+      <input type="text" class="form-control" id="targeturl" value="" disabled />
+    </div>
+    <br/>
+    <div class="row">
+      <div class="text-center">
+        <button type="button" class="btn btn-primary" id="btnScrape">Scrape</button>
       </div>
-      <br/>
-      <div class="container">
-        <div class="row">
-          <div class="text-center">
-            <button type="button" class="btn btn-primary" id="btnScrape">Scrape</button>
-          </div>
-        </div>
-        <div class="row">
-          <div id="results-panel" class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title">Results</h3>
-            </div>
-            <div class="panel-body" style="overflow-y:scroll">
-              <div id="scrape_results"></div>
-            </div>
-          </div>
-        </div>
+    </div>
+    <br/>
+    <div class="row">
+      <div id="results-panel" class="alert alert-success" role="alert">
+        <span id="results-summary"></span>
       </div>
     </div>
   </div>
+
+
 
 </body>
 <footer>

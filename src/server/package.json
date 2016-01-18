@@ -1,6 +1,6 @@
 {
   "name": "page-scraper-server-api",
-  "description": "Page Scrape chrome extension backend API",
+  "description": "Page Scrape Chrome Extension Backend API",
   "version": "0.0.1",
   "private": false,
   "main": "server.js",
@@ -15,5 +15,7 @@
     "nightmare": "^2.1.2",
     "nodemon": "^1.8.1",
     "x-ray": "^2.0.3"
-  }
+  },
+  "repository": "https://github.com/baskint/page-scrape-report-chrome-ext",
+  "license": "MIT"
 }

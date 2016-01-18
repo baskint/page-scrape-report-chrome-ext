@@ -37,7 +37,7 @@ var router = express.Router(); // get an instance of the express Router
 // middleware to use for all requests
 router.use(function (req, res, next) {
   // do logging
-  console.log('PSA backend is running.');
+  console.log('PSA routes are set');
   next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -45,7 +45,7 @@ router.use(function (req, res, next) {
 // test route to make sure everything is working (accessed at GET http://localhost:3003/api)
 router.get('/', function (req, res) {
   res.json({
-    message: 'PSA backend is alive and kicking...'
+    message: 'root routue is called'
   });
 });
 
@@ -80,8 +80,9 @@ function xrayScrape(scrape, req, res) {
 
 function persistData(data, scrape, res) {
   scrape.combines = JSON.parse(data);
+  // TOD momentJS instead
   scrape.scraped_at = Date.now();
-  //scrape.scraped_at: Date();
+
   // save the combines and check for errors
   scrape.save(function (err) {
     if (err)
@@ -93,8 +94,8 @@ function persistData(data, scrape, res) {
 
   // used the combineSet to update the Firebase instance
   var combineSet = [];
-  for (var i = 0, len = scrape.combines.length; i < len; i++) {
-    var linkSet = {}
+  for (var i = 0, len = scrape.combines.length; i < len; i = i + 1) {
+    var linkSet = {};
     linkSet.rank = scrape.combines[i].rank;
     linkSet.title = scrape.combines[i].title;
     linkSet.link = scrape.combines[i].link;
@@ -118,4 +119,4 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
-console.log('Magic happens on port ' + port);
+console.log('PSA backend is running on port ' + port);
