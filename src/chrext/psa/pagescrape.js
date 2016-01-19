@@ -43,7 +43,7 @@ var psaScrape = (function () {
 
   function displayResults(res) {
     $('#results-panel').show();
-    var combines = $.parseJSON(res.combines)
+    var combines = $.parseJSON(res.combines);
     $.each(combines, function () {
       console.log(this.rank);
       console.log(this.title);

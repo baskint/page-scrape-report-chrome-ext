@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Page Scrape and Analysis Tool",
   "short_name": "Page Scrape & Analysis Tool",
-  "description": "This extension analyzes a website for page scraping, analysis and some reporting",
+  "description": "This extension scrapes a web page for analysis and reporting",
   "version": "0.0.1",
   "browser_action": {
     "default_icon": "images/icon128.png"

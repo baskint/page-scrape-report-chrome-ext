@@ -1,9 +1,7 @@
 {
   "name": "page-scrape-report-chrome-ext",
+  "description": "PSA test harness setup",
   "version": "0.0.1",
-  "scripts": {
-    "test": "node_modules/.bin/phantomjs test/run.js"
-  },
   "author": "Baskin Tapkan",
   "contributors": [{
     "name": "Baskin Tapkan",
@@ -20,5 +18,5 @@
     "sinon-chrome": "^0.2.0"
   },
   "repository": "https://github.com/baskint/page-scrape-report-chrome-ext",
-"license": "MIT"
+  "license": "MIT"
 }
