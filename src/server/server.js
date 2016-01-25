@@ -12,8 +12,11 @@ var bodyParser = require('body-parser');
 var config = require('./config');
 var Firebase = require('firebase');
 
-// X-Ray parser model to do back-end parsing
+// X-Ray scraper model
 var xrm = require('./app/models/xray-model');
+
+// Cheerio scraper model
+var chrm = require('./app/models/cheerio-model');
 
 var mongoose = require('mongoose');
 mongoose.connect(config.mongodbUrl); // connect to Mongo database
@@ -45,7 +48,7 @@ router.use(function (req, res, next) {
 // test route to make sure everything is working (accessed at GET http://localhost:3003/api)
 router.get('/', function (req, res) {
   res.json({
-    message: 'root routue is called'
+    message: 'root route is called'
   });
 });
 
@@ -57,9 +60,17 @@ router.route('/scrape')
   var scrape = new Scrape(); // create a new instance of the Scrape model
   scrape.url = req.body.url; // set the URL
 
-  xrayScrape(scrape, req, res);
+  cheerioScrape(scrape, req, res);
+  //chrm.scrape(scrape.url);
+ // xrayScrape(scrape, req, res);
 
 });
+
+function cheerioScrape(scrape, req, res) {
+   chrm.scrape(scrape.url).then(function(data) {
+     console.log(data);
+   });
+}
 
 function xrayScrape(scrape, req, res) {
   // returns a readable stream as defined in the X-ray package - handle accordingly
@@ -76,6 +87,10 @@ function xrayScrape(scrape, req, res) {
     persistData(data, scrape, res);
   });
 
+}
+
+function cheerioScrape(scrape, req, res) {
+  chrm.scrape(scrape.url);
 }
 
 function persistData(data, scrape, res) {

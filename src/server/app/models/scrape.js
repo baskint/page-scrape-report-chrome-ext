@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 
 var ScrapeSchema = new Schema({
   url: String,
+  created_with: String,
   combines: [],
   scraped_at: {
     type: Date,
