@@ -9,12 +9,14 @@ var psaScrape = (function () {
 
     $('#btnScrape').click(function () {
       var scrapeUrl = encodeURI($('#targeturl').val());
+      var scrapeType = $('input[name="SCRAPETYPE"]:checked').val();
       $('#results-panel').hide();
       $.ajax({
         type: "POST",
         url: "http://localhost:3003/api/scrape",
         data: {
-          url: scrapeUrl
+          url: scrapeUrl,
+          scrapeWith: scrapeType
         },
         success: function (res) {
           displayResults(res);
@@ -43,12 +45,13 @@ var psaScrape = (function () {
 
   function displayResults(res) {
     $('#results-panel').show();
-    var combines = $.parseJSON(res.combines);
-    $.each(combines, function () {
-      console.log(this.rank);
-      console.log(this.title);
-      console.log(encodeURI(this.link));
-    });
+    // console.log(res);
+    var combines = res.combines;
+//    $.each(combines, function () {
+         //      console.log(this.rank);
+         //      console.log(this.title);
+         //      console.log(encodeURI(this.link));
+         //    });
     $('#results-summary').text(combines.length + ' link records are saved');
   }
 

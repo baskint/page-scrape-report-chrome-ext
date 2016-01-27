@@ -60,22 +60,21 @@ router.route('/scrape')
 .post(function (req, res) {
   var scrape = new Scrape(); // create a new instance of the Scrape model
   scrape.url = req.body.url; // set the URL
+  console.log(req.body.scrapeWith);
 
-  // 1. CheerioJS
-//  chrm.scrape(scrape.url).then(function (data) {
-//    scrape.combines = data;
-//    scrape.created_with = "cheerioJS";
-//    persistMongoDB(scrape, res);
-//    persistFirebase(scrape);
-//    console.log('cheerio scraped and saved');
-//  });
-
-  // 2. X-Ray
-  xrayScrape(scrape, req, res);
+  if (req.body.scrapeWith === "cheerioJS") {
+    chrm.scrape(scrape.url).then(function (data) {
+      scrape.combines = data;
+      scrape.created_with = "cheerioJS";
+      persistMongoDB(scrape, res);
+      persistFirebase(scrape);
+      console.log('cheerio scraped and saved');
+    });
+  } else if (req.body.scrapeWith === 'xray') {
+    xrayScrape(scrape, req, res);
+  }
 
 });
-
-
 
 
 function xrayScrape(scrape, req, res) {
