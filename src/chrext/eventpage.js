@@ -1,3 +1,4 @@
+// Event page for handling page scrape and analysis
 var psaEvent = (function () {
   'use strict';
   var targeturl = null;
@@ -11,7 +12,7 @@ var psaEvent = (function () {
       type: "panel",
       height: 500,
       width: 300
-    }, function (win) {
+    }, function () {
       var manifestData = chrome.runtime.getManifest();
 
       if (manifestData) {

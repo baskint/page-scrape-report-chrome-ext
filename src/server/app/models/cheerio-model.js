@@ -1,11 +1,13 @@
 var request = require('request');
 var cheerio = require('cheerio');
-var Q = require('Q');
+var Promise = require('promise');
 
-// source : https://www.digitalocean.com/community/tutorials/how-to-use-node-js-request-and-cheerio-to-set-up-simple-web-scraping
-exports.scrape = function (url) {
+function scrapePromise(url, json) {
+  'use strict';
+  json = json || false;
+  return new Promise(function (resolve, reject) {
     request(url, function (error, response, html) {
-      var deferred = Q.defer();
+
       if (!error && response.statusCode == 200) {
         var $ = cheerio.load(html);
         var parsedResults = [];
@@ -37,11 +39,11 @@ exports.scrape = function (url) {
           parsedResults.push(metadata);
         });
         // Log our finished parse results in the terminal
-        //console.log(parsedResults);
-        console.log(parsedResults);
-        deferred.resolve(parsedResults);
       }
-      return deferred.promise;
+      resolve(parsedResults);
     });
-
+  });
 }
+
+// source : https://www.digitalocean.com/community/tutorials/how-to-use-node-js-request-and-cheerio-to-set-up-simple-web-scraping
+exports.scrape = scrapePromise;

@@ -11,6 +11,7 @@ var app = express(); // define our app using express
 var bodyParser = require('body-parser');
 var config = require('./config');
 var Firebase = require('firebase');
+var Promise = require('promise');
 
 // X-Ray scraper model
 var xrm = require('./app/models/xray-model');
@@ -60,17 +61,22 @@ router.route('/scrape')
   var scrape = new Scrape(); // create a new instance of the Scrape model
   scrape.url = req.body.url; // set the URL
 
-  cheerioScrape(scrape, req, res);
-  //chrm.scrape(scrape.url);
- // xrayScrape(scrape, req, res);
+  // 1. CheerioJS
+//  chrm.scrape(scrape.url).then(function (data) {
+//    scrape.combines = data;
+//    scrape.created_with = "cheerioJS";
+//    persistMongoDB(scrape, res);
+//    persistFirebase(scrape);
+//    console.log('cheerio scraped and saved');
+//  });
+
+  // 2. X-Ray
+  xrayScrape(scrape, req, res);
 
 });
 
-function cheerioScrape(scrape, req, res) {
-   chrm.scrape(scrape.url).then(function(data) {
-     console.log(data);
-   });
-}
+
+
 
 function xrayScrape(scrape, req, res) {
   // returns a readable stream as defined in the X-ray package - handle accordingly
@@ -84,29 +90,28 @@ function xrayScrape(scrape, req, res) {
   });
 
   readableStream.on('end', function () {
-    persistData(data, scrape, res);
+    scrape.created_with = "x-ray";
+    scrape.combines = JSON.parse(data);
+    persistMongoDB(scrape, res);
+    persistFirebase(scrape);
+    console.log('xray scraped and saved');
   });
 
 }
 
-function cheerioScrape(scrape, req, res) {
-  chrm.scrape(scrape.url);
-}
-
-function persistData(data, scrape, res) {
-  scrape.combines = JSON.parse(data);
-  // TOD momentJS instead
-  scrape.scraped_at = Date.now();
-
+function persistMongoDB(scrape, res) {
   // save the combines and check for errors
+  console.log(scrape);
   scrape.save(function (err) {
     if (err)
       res.send(err);
     res.json({
-      combines: data
+      combines: scrape.combines
     });
   });
+}
 
+function persistFirebase(scrape) {
   // used the combineSet to update the Firebase instance
   var combineSet = [];
   for (var i = 0, len = scrape.combines.length; i < len; i = i + 1) {
@@ -121,6 +126,7 @@ function persistData(data, scrape, res) {
   var fb_scraped = pageScrapeFirebase.child("scrapes");
   fb_scraped.push({
     url: scrape.url,
+    created_with: scrape.created_with,
     combines: combineSet,
     scrapedAt: Firebase.ServerValue.TIMESTAMP
   });
