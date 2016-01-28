@@ -2,12 +2,12 @@ var request = require('request');
 var cheerio = require('cheerio');
 var Promise = require('promise');
 
-function scrapePromise(url, json) {
+// source : https://www.digitalocean.com/community/tutorials/how-to-use-node-js-request-and-cheerio-to-set-up-simple-web-scraping
+function scrape(url, json) {
   'use strict';
   json = json || false;
   return new Promise(function (resolve, reject) {
     request(url, function (error, response, html) {
-
       if (!error && response.statusCode == 200) {
         var $ = cheerio.load(html);
         var parsedResults = [];
@@ -20,30 +20,19 @@ function scrapePromise(url, json) {
           var title = a.text();
           // Parse the href attribute from the "a" element
           var link = a.attr('href');
-          // Get the subtext children from the next row in the HTML table.
-          var subtext = a.parent().parent().next().children('.subtext').children();
-          // Extract the relevant data from the children
-          var points = $(subtext).eq(0).text();
-          var username = $(subtext).eq(1).text();
-          var comments = $(subtext).eq(2).text();
           // Our parsed meta data object
           var metadata = {
             rank: parseInt(rank),
             title: title,
-            link: link,
-            //points: parseInt(points),
-            //username: username,
-            //comments: parseInt(comments)
+            link: link
           };
           // Push meta-data into parsedResults array
           parsedResults.push(metadata);
         });
-        // Log our finished parse results in the terminal
       }
       resolve(parsedResults);
     });
   });
 }
 
-// source : https://www.digitalocean.com/community/tutorials/how-to-use-node-js-request-and-cheerio-to-set-up-simple-web-scraping
-exports.scrape = scrapePromise;
+exports.scrape = scrape;

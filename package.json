@@ -3,17 +3,16 @@
   "description": "PSA test harness setup",
   "version": "0.0.1",
   "author": "Baskin Tapkan",
-  "contributors": [{
-    "name": "Baskin Tapkan",
-    "email": "baskint@gmail.com"
-  }],
+  "contributors": [
+    {
+      "name": "Baskin Tapkan",
+      "email": "baskint@gmail.com"
+    }
+  ],
   "devDependencies": {
-    "chai": "^1.9.2",
     "gulp": "^3.9.0",
-    "jshint": "^2.8.0",
-    "mocha": "^1.21.4",
-    "mocha-phantomjs-istanbul": "0.0.2",
-    "phantomjs": "^1.9.12",
+    "gulp-mocha-phantomjs": "^0.10.1",
+    "mocha": "^2.4.4",
     "sinon": "^1.11.1",
     "sinon-chrome": "^0.2.0"
   },

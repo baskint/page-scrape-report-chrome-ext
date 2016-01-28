@@ -100,7 +100,6 @@ function xrayScrape(scrape, req, res) {
 
 function persistMongoDB(scrape, res) {
   // save the combines and check for errors
-  console.log(scrape);
   scrape.save(function (err) {
     if (err)
       res.send(err);
