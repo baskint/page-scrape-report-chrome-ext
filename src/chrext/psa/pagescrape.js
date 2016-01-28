@@ -26,8 +26,6 @@ var psaScrape = (function () {
         },
         dataType: "json"
       });
-
-
     });
   };
 

@@ -53,6 +53,13 @@
   overflow: auto;
 }
 
+h4 small,
+.h4 small,
+h4 small .psa-header {
+  color: #68c9c9;
+  text-align: center;
+}
+
 .psa-panel {
   position: relative;
   background: #060606;

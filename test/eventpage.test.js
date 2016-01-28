@@ -23,9 +23,9 @@ describe('event page', function () {
         //sinon.assert.calledOnce(chrome.runtime.OnMessage.addListener);
         var windowId = 42;
         // set the window id
-        cctevent.setCompatWinId(42);
+        psaEvent.setCompatWinId(42);
         // get the window id
-        assert.equal(cctevent.getCompatWinId(), windowId);
+        assert.equal(psaEvent.getCompatWinId(), windowId);
       });
       done();
     });
@@ -43,11 +43,11 @@ describe('event page', function () {
       page.evaluate(function () {
         //sinon.assert.calledOnce(chrome.runtime.OnMessage.addListener);
         var windowId = 42;
-        cctevent.setCompatWinId(windowId)
+        psaEvent.setCompatWinId(windowId)
           // set the window id
-        cctevent.resetCompatWinId(windowId);
+        psaEvent.resetCompatWinId(windowId);
         // get the window id
-        assert.equal(0, cctevent.getCompatWinId());
+        assert.equal(0, psaEvent.getCompatWinId());
 
       });
       done();
@@ -124,7 +124,7 @@ describe('event page', function () {
         var request = {
           inject_mms: true
         };
-        cctevent.attachStaticAnalysis(request);
+        psaEvent.attachStaticAnalysis(request);
       });
       done();
     });
