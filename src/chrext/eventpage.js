@@ -28,6 +28,8 @@ var psaEvent = (function () {
         'targetUrl': targeturl,
         'appversion': appversion
       });
+    } else if (request.searchTerm) {
+      console.log(request.searchTerm);
     }
   };
 

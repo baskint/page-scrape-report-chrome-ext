@@ -26,25 +26,26 @@
       <label>
         <input type="radio" value="xray" name="SCRAPETYPE">X-Ray</label>
     </div>
-    <div class="row">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search Links" name="srch-term" id="srch-term">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-        </div>
-      </div>
-    </div>
     <br/>
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-primary" id="btnScrape">Scrape</button>
       </div>
     </div>
-    <br/>
     <div class="row">
-      <div id="results-panel" class="alert alert-success" role="alert">
-        <span id="results-summary"></span>
+      <div id="results-panel">
+        <h4> <span style="display: inline-block" class="label label-success" id="results-summary"></span></h4>
       </div>
+    </div>
+    <div class="row">
+      <form id="searchForm">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search in titles" name="srch-term" id="srch-term">
+          <div class="input-group-btn">
+            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
