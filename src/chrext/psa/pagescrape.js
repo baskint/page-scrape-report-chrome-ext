@@ -76,6 +76,7 @@ var psaScrape = (function () {
 
   }
 
+  // Public API region
   var start = function () {
 
     init();
@@ -110,6 +111,8 @@ var psaScrape = (function () {
   var listener = function (request, sender, sendResponse) {
     // TODO listen to background page generated events
   };
+
+  //endregion
 
   return {
     start: start,
