@@ -10,11 +10,12 @@
     }
   ],
   "devDependencies": {
+    "chai": "^3.5.0",
     "gulp": "^3.9.0",
     "gulp-mocha-phantomjs": "^0.10.1",
     "mocha": "^2.4.4",
     "should": "^8.2.1",
-    "sinon": "^1.11.1",
+    "sinon": "^1.17.3",
     "sinon-chrome": "^0.2.0"
   },
   "repository": "https://github.com/baskint/page-scrape-report-chrome-ext",

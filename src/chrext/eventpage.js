@@ -18,6 +18,10 @@ var psaEvent = (function () {
     return p;
   }
 
+  function sendSearchResults(tabId, results) {
+    chrome.tabs.sendMessage(tabId, results, function () {});
+  }
+
   var start = function (tab) {
     // create a separate window
     chrome.windows.create({
@@ -45,18 +49,14 @@ var psaEvent = (function () {
       });
     } else if (request.searchTerm) {
       // TODO load all stored titles from the local storage
-      var searchString = request.searchTerm.toUpperCase();
+      var searchString = request.searchTerm.toLowerCase();
       getScraped().then(function (scraped) {
         if (scraped) {
-          // console.log(scraped);
           var tobeSearched = null;
           var searchResults = [];
           scraped.combines.forEach(function (v, i, a) {
-            tobeSearched = v.title.toUpperCase();
-            //            console.log(tobeSearched);
-            //            console.log(searchString);
+            tobeSearched = v.title.toLowerCase();
             if (tobeSearched.indexOf(searchString, 0) > -1) {
-              // TODO return results and render
               var result = {
                 "title": v.title,
                 "rank": v.rank,
@@ -64,10 +64,8 @@ var psaEvent = (function () {
               };
               searchResults.push(result);
             }
-
           });
-          // TODO generate an event to get the results back to the popup form
-          console.dir(searchResults);
+          sendSearchResults(sender.tab.id, searchResults);
         }
       });
     }

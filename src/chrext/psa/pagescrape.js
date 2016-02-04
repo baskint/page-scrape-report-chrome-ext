@@ -109,7 +109,14 @@ var psaScrape = (function () {
   };
 
   var listener = function (request, sender, sendResponse) {
-    // TODO listen to background page generated events
+    // remove table contents
+    $('#searchResults tr').remove();
+    if (request.length > 0) {
+      var scrapes = request;
+      for (var i = 0; i < scrapes.length; i++) {
+        $('#searchResults').append('<tr><td>' + scrapes[i].title + '</td></tr>');
+      }
+    }
   };
 
   //endregion
