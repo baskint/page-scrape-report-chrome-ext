@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Mocha</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+  <script src="../src/chrext/lib/jquery-2.2.0.min.js"></script>
+  <script src="../node_modules/should/should.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script src="../node_modules/sinon/pkg/sinon.js"></script>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="sinon-chrome.latest.js"></script>
+  <script src="../src/chrext/eventpage.js"></script>
+</head>
+
+<body>
+  <script>
+    mocha.setup('bdd')
+  </script>
+
+  <script src="eventpage.test.js"></script>
+  <script>
+    mocha.run();
+  </script>
+</body>
+
+</html>
